@@ -1,0 +1,446 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "comparePageInsights",
+        "siteUrlCompare": "https://www.drsalehilab.com/",
+        "dateRangeModeA": "last7d",
+        "compareMode": "custom",
+        "dateRangeModeB": "custom",
+        "startDateB": "2025-04-01T00:00:00",
+        "endDateB": "2025-10-14T00:00:00",
+        "rowLimitCompare": 10000,
+        "dimensionsCompare": [
+          "query"
+        ]
+      },
+      "type": "n8n-nodes-google-search-console.googleSearchConsole",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -80
+      ],
+      "id": "a6a9ed4f-68e5-45cc-bfd9-dd97672d5fbc",
+      "name": "Compare search analytics between two date ranges",
+      "credentials": {
+        "googleSearchConsoleOAuth2Api": {
+          "id": "4cWXaE7DzaKHXWSK",
+          "name": "Google Search Console account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM",
+          "mode": "list",
+          "cachedResultName": "new impression",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1722774370,
+          "mode": "list",
+          "cachedResultName": "new keyword",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM/edit#gid=1722774370"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ $json.query }}",
+            "impression": "={{ $json.impr_a }}"
+          },
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "impression",
+              "displayName": "impression",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -64,
+        128
+      ],
+      "id": "a709ac02-d333-464e-bf56-d33d73c6891b",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "QvHG7YaK0xrWGior",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4e2226fa-46e9-411f-a0f0-4fd941b09737",
+              "leftValue": "={{ $json.clicks_a }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        64
+      ],
+      "id": "3b2eaf7f-a9c8-4966-9413-4106196b8dbe",
+      "name": "no click"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM",
+          "mode": "list",
+          "cachedResultName": "new impression",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 837952553,
+          "mode": "list",
+          "cachedResultName": "No Clicks",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM/edit#gid=837952553"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ $json.query }}",
+            "impression": "={{ $json.impr_a }}"
+          },
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "impression",
+              "displayName": "impression",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        64
+      ],
+      "id": "0ac481b7-9029-4b13-aa44-1e6d6afac8ea",
+      "name": "Append or update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "QvHG7YaK0xrWGior",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b7f2b56b-bb62-4160-aab0-7c55ac86436c",
+              "leftValue": "={{ $json.impr_b }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        -16,
+        -80
+      ],
+      "id": "bb5630b6-be6d-471b-87b5-da769e9e7da8",
+      "name": "new keyword"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c97f5c06-0a96-4d93-add3-e1368ade8661",
+              "leftValue": "={{ $json.clicks_a }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        256,
+        -112
+      ],
+      "id": "7823fb57-9ac4-4d7a-a922-accd3ed55163",
+      "name": "Clicked"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM",
+          "mode": "list",
+          "cachedResultName": "new impression",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1076767847,
+          "mode": "list",
+          "cachedResultName": "Clicked",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1EQpJRYG2PyvzR87hw7RWXSaxz94BAPurQ5Or-sYnTWM/edit#gid=1076767847"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ $json.query }}",
+            "impression": "={{ $json.impr_a }}",
+            "click": "={{ $json.clicks_a }}"
+          },
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "impression",
+              "displayName": "impression",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "click",
+              "displayName": "click",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        464,
+        -112
+      ],
+      "id": "8d0b9d83-4af0-43f0-8265-605d4c1058a9",
+      "name": "Append or update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "QvHG7YaK0xrWGior",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 23
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        -80
+      ],
+      "id": "ee29002f-7aa2-43b0-86c6-2bfac180c468",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Compare search analytics between two date ranges": {
+      "main": [
+        [
+          {
+            "node": "new keyword",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "no click": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "new keyword": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "no click",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Clicked",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clicked": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Compare search analytics between two date ranges",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f7b65193-2f5a-4640-92ce-3160b3a5c530",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "90508cb8f2d83999afaa216d5287cc3a6638d0fa1d4e1e64e87818d08c9f8efe"
+  },
+  "id": "KbLSTXsk8kEjgG1r",
+  "tags": []
+}
